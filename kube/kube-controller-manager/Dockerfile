@@ -1,0 +1,25 @@
+FROM kolla/ubuntu-binary-kube-base:8.0.0
+LABEL maintainer="Kolla Project (https://launchpad.net/kolla)" name="kube-controller-manager" build-date="20190404"
+
+ENV KUBERNETES_COMPONENT=kube-controller-manager
+
+
+
+
+
+
+   
+
+RUN apt-get update && apt-get -y install --no-install-recommends ceph-common && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
+RUN true \
+    && curl -L ${KUBERNETES_DOWNLOAD_ROOT}/${KUBERNETES_COMPONENT} -o /usr/bin/${KUBERNETES_COMPONENT} \
+    && chmod +x /usr/bin/${KUBERNETES_COMPONENT}
+
+
+# Clear any customisation by Kolla to entrypoint & command
+ENTRYPOINT []
+CMD []
+
+
