@@ -17,8 +17,8 @@ RUN usermod --append --home /var/lib/horizon --groups kolla horizon \
     
         
 	#NOTE(hrw): check for python-murano-dashboard python-neutron-lbaas-dashboard
+RUN apt-get update && apt-get -y install --no-install-recommends apache2 gettext libapache2-mod-wsgi locales openstack-dashboard python-designate-dashboard python-manila-ui python-murano-dashboard python-sahara-dashboard python-trove-dashboard tzdata && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get -y install --no-install-recommends apache2 gettext libapache2-mod-wsgi-py3 locales openstack-dashboard python3-designate-dashboard python3-heat-dashboard python3-manila-ui python3-sahara-dashboard python3-trove-dashboard tzdata && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
 RUN echo > /etc/apache2/ports.conf \
@@ -34,7 +34,7 @@ RUN echo > /etc/apache2/ports.conf \
     && ln -s /usr/share/openstack-dashboard/openstack_dashboard /usr/lib/python2.7/site-packages/openstack_dashboard \
     && ln -s /usr/share/openstack-dashboard/static /usr/lib/python2.7/site-packages/static \
     && for locale in /usr/lib/python2.7/site-packages/*/locale; do \
-           (cd ${locale%/*} && /usr/bin/python3 /usr/bin/manage.py compilemessages) \
+           (cd ${locale%/*} && /usr/bin/python /usr/bin/manage.py compilemessages) \
        done
 
 
